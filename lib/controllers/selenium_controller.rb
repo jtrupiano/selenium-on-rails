@@ -13,8 +13,7 @@ class SeleniumController < ActionController::Base
       reset_session
       @session_wiped = true
     end
-    @cleared_tables = clear_tables params[:clear_tables].to_s
-    @loaded_fixtures = load_fixtures params[:fixtures].to_s
+    reset_db
     render :file => view_path('setup.rhtml'), :layout => layout_path\
   end
 
@@ -118,5 +117,11 @@ EOS
     cur_result_dir
   end
   
-  private :record_table
+  def reset_db
+    @db_reset = true
+    `cd #{RAILS_ROOT} && rake sel:restore`
+  end
+  
+  private :record_table, :reset_db
+  
 end
