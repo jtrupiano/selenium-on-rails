@@ -13,7 +13,10 @@ class SeleniumController < ActionController::Base
       reset_session
       @session_wiped = true
     end
-    reset_db
+    unless params.has_key? :keep_db
+      reset_db
+      @db_wiped = true
+    end
     render :file => view_path('setup.rhtml'), :layout => layout_path\
   end
 
@@ -118,7 +121,6 @@ EOS
   end
   
   def reset_db
-    @db_reset = true
     `cd #{RAILS_ROOT} && rake sel:restore`
   end
   

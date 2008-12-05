@@ -6,6 +6,9 @@ module ActionController
         draw_without_selenium_routes do |map|
           map.connect 'selenium/setup',
             :controller => 'selenium', :action => 'setup'
+          # Introduced in this fork...
+          map.connect 'selenium/setup/:action',
+            :controller => 'selenium_setup'
           map.connect 'selenium/tests/*testname',
             :controller => 'selenium', :action => 'test_file'
           map.connect 'selenium/postResults',

@@ -1,10 +1,10 @@
 <% @page_title = 'Setup' -%>
-<% if defined?(@session_wiped) or defined?(@db_reset) -%>
+<% if defined?(@session_wiped) or defined?(@db_wiped) -%>
 	<div id="notice">
 		<% if defined?(@session_wiped) -%>
 		<p>The session is wiped clean.</p>
     <% end-%>
-    <% if defined?(@db_reset) -%>
+    <% if defined?(@db_wiped) -%>
     <p>The database has been reset.</p>
     <% end -%>
 	</div>
@@ -20,11 +20,12 @@
 			<tr><td>open</td><td><%= url_for %>?keep_session</td><td>&nbsp;</td></tr>
 		</table>
 	</dd>
-	<dt><tt>stories</tt></dt>
+	<dt><tt>keep_db</tt></dt>
 	<dd>
-    Drops and recreates the database from a cache sitting in tmp/story-dump.sql.
+    Per default, the database is dropped and recreated (from a dump file).  The data dump is looked for in tmp/story-dump.sql.
+    Setting <tt>keep_db</tt> will not wipe and reset the database.
 		<table>
-			<tr><td>open</td><td><%= url_for %></td><td>&nbsp;</td></tr>
+			<tr><td>open</td><td><%= url_for %>?keep_db</td><td>&nbsp;</td></tr>
 		</table>
 	</dd>
 </dl>
