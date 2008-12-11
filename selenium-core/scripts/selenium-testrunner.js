@@ -259,6 +259,9 @@ function onSeleniumLoad() {
     suiteFrame = new HtmlTestSuiteFrame(getSuiteFrame());
     testFrame = new HtmlTestFrame(getTestFrame());
     htmlTestRunner = new HtmlTestRunner();
+    
+    // jtrupiano 2008-12-11
+    htmlTestRunner.serverTeardown = forceServerTeardown;
 }
 
 var suiteFrame;
@@ -1152,6 +1155,15 @@ objectExtend(HtmlRunnerTestLoop.prototype, {
         }
 
         this.metrics.printMetrics();
+        
+        // jtrupiano 2008-12-11
+        try {
+          if (htmlTestRunner.serverTeardown) {
+            htmlTestRunner.serverTeardown();
+          }
+        } catch(err) { 
+          alert("Error in htmlTestRunner.serverTeardown().  Simply ignoring and continuing.");
+        }
 
         window.setTimeout(function() {
             htmlTestRunner.runNextTest();

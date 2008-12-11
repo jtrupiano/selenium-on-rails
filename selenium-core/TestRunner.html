@@ -54,10 +54,21 @@ to work-around a bug in IE on Win2K whereby the HTA application doesn't function
                 var domViewer = window.open(getDocumentBase(document) + 'domviewer/domviewer.html');
                 return false;
             }
+            
+            // jtrupiano 2008-12-11
+            function forceServerTeardown() {
+              $('teardownStatus').show();
+              new Ajax.Request("/selenium/setup", {asynchronous: false, method: 'get'});
+              $('teardownStatus').hide();
+            }
+            
         </script>
 </head>
 
 <body onLoad="onSeleniumLoad();">
+  <div id="teardownStatus" style="display: none; position: absolute; top: 100px; left: 400px; background-color: #cccccc; border: solid 1px red; padding: 4px; font-size: 150%; font-weight: bold;">
+    Currently tearing down
+  </div>
 <table class="layout">
 <form action="" name="controlPanel">
 
@@ -148,8 +159,14 @@ to work-around a bug in IE on Win2K whereby the HTA application doesn't function
                     <button type="button" id="domViewer1" onClick="openDomViewer();">
                         View DOM
                     </button>
+                    
                     <button type="button" onClick="LOG.show();">
                         Show Log
+                    </button>
+                    
+                    <!-- jtrupiano 2008-12-11 -->
+                    <button type="button" id="forceTeardown" onclick="forceServerTeardown();">
+                      Force Server Teardown
                     </button>
 
                 </fieldset>
