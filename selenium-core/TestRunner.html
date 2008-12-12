@@ -57,9 +57,11 @@ to work-around a bug in IE on Win2K whereby the HTA application doesn't function
             
             // jtrupiano 2008-12-11
             function forceServerTeardown() {
-              $('teardownStatus').show();
+              // jtrupiano 2008-12-12 
+              // Seems like something's busted in this version of Prototype.  I couldn't use hide()/show() in IE7.
+              $('teardownStatus').style.display = ""; //show();
               new Ajax.Request("/selenium/setup", {asynchronous: false, method: 'get'});
-              $('teardownStatus').hide();
+              $('teardownStatus').style.display = "none"; //hide();
             }
             
         </script>
