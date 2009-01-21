@@ -121,7 +121,7 @@ EOS
   end
   
   def reset_db
-    `cd #{RAILS_ROOT} && rake sel:restore`
+    `cd #{RAILS_ROOT} && rake RAILS_ENV=#{RAILS_ENV} sel:restore`
   end
   
   private :record_table, :reset_db
